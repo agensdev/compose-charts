@@ -7,12 +7,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
 data class LineChartData(
   val series: List<SeriesData>,
-  val xLabels: List<Any> = emptyList(),
-  val xLabelFormatter: (label: Any) -> String = { label -> label.toString() },
-  val showMaxLabelsX: Int? = null,
+  val xLabels: List<String> = emptyList(),
   val yLabels: List<AxisLabel> = listOf(),
   val chartColors: ChartColors = ChartColors.defaultColors(),
   val horizontalLines: Boolean = false,
@@ -34,5 +31,4 @@ data class LineChartData(
       val value: Float
     )
   }
-
 }
