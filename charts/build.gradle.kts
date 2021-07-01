@@ -4,6 +4,7 @@ plugins {
   id("com.android.library")
   kotlin("android")
   id("com.vanniktech.maven.publish")
+  id("maven-publish")
 }
 
 android {
@@ -54,3 +55,36 @@ dependencies {
 mavenPublish {
   sonatypeHost = SonatypeHost.S01
 }
+
+afterEvaluate {
+  publishing {
+    publications {
+      // Creates a Maven publication called "release".
+      create<MavenPublication>("release") {
+        // Applies the component for the release build variant.
+        from(components.getByName("release"))
+
+        // You can then customize attributes of the publication as shown below.
+        groupId = project.property("GROUP") as String
+        artifactId = project.property("POM_ARTIFACT_ID") as String
+        version = project.property("VERSION_NAME") as String
+      }
+    }
+  }
+}
+
+publishing {
+  repositories {
+    maven {
+      name = "AgensNexus"
+      url = uri("http://repo.agens.no:8081/nexus/content/repositories/oss-releases/")
+      isAllowInsecureProtocol = true
+      credentials {
+        username = project.properties["nexus_deploy_user"] as String? ?: ""
+        password = project.properties["nexus_deploy_pwd"] as String? ?: ""
+      }
+    }
+  }
+}
+
+
