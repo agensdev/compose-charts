@@ -7,19 +7,23 @@ data class ChartColors(
   val background: Color,
   val label: Color,
   val horizontalLines: Color,
+  val drillDownLine: Color,
 ) {
+
 
   companion object {
     fun defaultColors(
       axis: Color = Color.Black,
       background: Color = Color.Transparent,
       label: Color = Color(0xFF909BAA),
-      horizontalLines: Color = Color(0xFF233F53)
+      horizontalLines: Color = Color(0xFF233F53),
+      drillDownLines: Color = Color.Black
     ): ChartColors = ChartColors(
       axis = axis,
       background = background,
       label = label,
-      horizontalLines = horizontalLines
+      horizontalLines = horizontalLines,
+      drillDownLine = drillDownLines
     )
   }
 

@@ -1,5 +1,6 @@
 package hu.ma.charts.sample.lines
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,7 +26,19 @@ fun LinesSimpleScreen() {
           .height(400.dp),
         title = title
       ) {
-        LineChart(modifier = Modifier.fillMaxSize(), data = data)
+        LineChart(
+          modifier = Modifier.fillMaxSize(),
+          data = data,
+          onDrillDown = { xIndex, allSeries ->
+            Log.d(
+              "LineChart",
+              "You are drilling down at xIndex=$xIndex, series values at this index: ${
+                allSeries.map { it.points.find { point -> point.x == xIndex } }
+                  .map { it?.value }
+                  .joinToString()
+              }"
+            )
+          })
       }
     }
   }

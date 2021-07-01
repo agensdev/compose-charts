@@ -22,24 +22,24 @@ fun LineChartPreview() {
       .background(Color(255, 255, 255))
       .padding(16.dp),
     data = LineChartData(
-      lines = listOf(
-        LineChartData.LineData(
+      series = listOf(
+        LineChartData.SeriesData(
           "Line 1",
           color = Color(0xFF66C194), gradientFill = true,
           points = listOf(
-            LineChartData.LineData.LinePoint(0, 0f),
-            LineChartData.LineData.LinePoint(1, 100f),
-            LineChartData.LineData.LinePoint(2, 150f),
-            LineChartData.LineData.LinePoint(3, 75f)
+            LineChartData.SeriesData.Point(0, 0f),
+            LineChartData.SeriesData.Point(1, 100f),
+            LineChartData.SeriesData.Point(2, 150f),
+            LineChartData.SeriesData.Point(3, 75f)
           )
         ),
-        LineChartData.LineData(
+        LineChartData.SeriesData(
           "Line 2", color = Color(0xFF427C9C), gradientFill = true, points = listOf(
-            LineChartData.LineData.LinePoint(1, 50f),
-            LineChartData.LineData.LinePoint(2, 20f),
-            LineChartData.LineData.LinePoint(3, 80f),
-            LineChartData.LineData.LinePoint(4, 120f),
-            LineChartData.LineData.LinePoint(6, 90f),
+            LineChartData.SeriesData.Point(1, 50f),
+            LineChartData.SeriesData.Point(2, 20f),
+            LineChartData.SeriesData.Point(3, 80f),
+            LineChartData.SeriesData.Point(4, 120f),
+            LineChartData.SeriesData.Point(6, 90f),
           )
         )
       ),

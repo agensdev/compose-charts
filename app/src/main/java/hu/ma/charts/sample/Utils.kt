@@ -114,74 +114,74 @@ internal val BarsSampleData = listOf(
 
 internal val LinesSampleData = listOf(
   "Lines" to LineChartData(
-    lines = listOf(
-      LineChartData.LineData(
+    series = listOf(
+      LineChartData.SeriesData(
         "Line A", points = listOf(
-          LineChartData.LineData.LinePoint(0, 0f),
-          LineChartData.LineData.LinePoint(1, 10.0f),
-          LineChartData.LineData.LinePoint(2, 20.0f),
-          LineChartData.LineData.LinePoint(3, 30.0f),
-          LineChartData.LineData.LinePoint(4, 50.0f),
-          LineChartData.LineData.LinePoint(5, 35.0f),
+          LineChartData.SeriesData.Point(0, 0f),
+          LineChartData.SeriesData.Point(1, 10.0f),
+          LineChartData.SeriesData.Point(2, 20.0f),
+          LineChartData.SeriesData.Point(3, 30.0f),
+          LineChartData.SeriesData.Point(4, 50.0f),
+          LineChartData.SeriesData.Point(5, 35.0f),
         ), Color.Red
       ),
-      LineChartData.LineData(
+      LineChartData.SeriesData(
         "Line B", points = listOf(
-          LineChartData.LineData.LinePoint(0, 20f),
-          LineChartData.LineData.LinePoint(1, 10.0f),
-          LineChartData.LineData.LinePoint(2, 5.0f),
-          LineChartData.LineData.LinePoint(3, 15.0f),
-          LineChartData.LineData.LinePoint(4, 30.0f),
-          LineChartData.LineData.LinePoint(5, 35.0f),
+          LineChartData.SeriesData.Point(0, 20f),
+          LineChartData.SeriesData.Point(1, 10.0f),
+          LineChartData.SeriesData.Point(2, 5.0f),
+          LineChartData.SeriesData.Point(3, 15.0f),
+          LineChartData.SeriesData.Point(4, 30.0f),
+          LineChartData.SeriesData.Point(5, 35.0f),
         ), Color.Blue
       ),
     ),
     xLabels = listOf("Year 1", "2", "3", "4", "5", "6")
   ),
   "Gradient fill" to LineChartData(
-    lines = listOf(
-      LineChartData.LineData(
+    series = listOf(
+      LineChartData.SeriesData(
         title = "Line A", points = listOf(
-          LineChartData.LineData.LinePoint(0, 0f),
-          LineChartData.LineData.LinePoint(1, 10.0f),
-          LineChartData.LineData.LinePoint(2, 20.0f),
-          LineChartData.LineData.LinePoint(3, 30.0f),
-          LineChartData.LineData.LinePoint(4, 50.0f),
-          LineChartData.LineData.LinePoint(5, 35.0f),
+          LineChartData.SeriesData.Point(0, 0f),
+          LineChartData.SeriesData.Point(1, 10.0f),
+          LineChartData.SeriesData.Point(2, 20.0f),
+          LineChartData.SeriesData.Point(3, 30.0f),
+          LineChartData.SeriesData.Point(4, 50.0f),
+          LineChartData.SeriesData.Point(5, 35.0f),
         ), Color.Red, gradientFill = true
       ),
-      LineChartData.LineData(
+      LineChartData.SeriesData(
         title = "Line B", points = listOf(
-          LineChartData.LineData.LinePoint(0, 20f),
-          LineChartData.LineData.LinePoint(1, 10.0f),
-          LineChartData.LineData.LinePoint(2, 5.0f),
-          LineChartData.LineData.LinePoint(3, 15.0f),
-          LineChartData.LineData.LinePoint(4, 30.0f),
-          LineChartData.LineData.LinePoint(5, 35.0f),
+          LineChartData.SeriesData.Point(0, 20f),
+          LineChartData.SeriesData.Point(1, 10.0f),
+          LineChartData.SeriesData.Point(2, 5.0f),
+          LineChartData.SeriesData.Point(3, 15.0f),
+          LineChartData.SeriesData.Point(4, 30.0f),
+          LineChartData.SeriesData.Point(5, 35.0f),
         ), Color.Blue, gradientFill = true
       ),
     ),
   ),
   "Y-axis labels" to LineChartData(
-    lines = listOf(
-      LineChartData.LineData(
+    series = listOf(
+      LineChartData.SeriesData(
         title = "Line A", points = listOf(
-          LineChartData.LineData.LinePoint(0, 0f),
-          LineChartData.LineData.LinePoint(1, 10.0f),
-          LineChartData.LineData.LinePoint(2, 20.0f),
-          LineChartData.LineData.LinePoint(3, 30.0f),
-          LineChartData.LineData.LinePoint(4, 50.0f),
-          LineChartData.LineData.LinePoint(5, 35.0f),
+          LineChartData.SeriesData.Point(0, 0f),
+          LineChartData.SeriesData.Point(1, 10.0f),
+          LineChartData.SeriesData.Point(2, 20.0f),
+          LineChartData.SeriesData.Point(3, 30.0f),
+          LineChartData.SeriesData.Point(4, 50.0f),
+          LineChartData.SeriesData.Point(5, 35.0f),
         ), Color.Red, gradientFill = true
       ),
-      LineChartData.LineData(
+      LineChartData.SeriesData(
         title = "Line B", points = listOf(
-          LineChartData.LineData.LinePoint(0, 20f),
-          LineChartData.LineData.LinePoint(1, 10.0f),
-          LineChartData.LineData.LinePoint(2, 5.0f),
-          LineChartData.LineData.LinePoint(3, 15.0f),
-          LineChartData.LineData.LinePoint(4, 30.0f),
-          LineChartData.LineData.LinePoint(5, 35.0f),
+          LineChartData.SeriesData.Point(0, 20f),
+          LineChartData.SeriesData.Point(1, 10.0f),
+          LineChartData.SeriesData.Point(2, 5.0f),
+          LineChartData.SeriesData.Point(3, 15.0f),
+          LineChartData.SeriesData.Point(4, 30.0f),
+          LineChartData.SeriesData.Point(5, 35.0f),
         ), Color.Blue, gradientFill = true
       ),
     ),
@@ -193,25 +193,25 @@ internal val LinesSampleData = listOf(
     drawAxis = DrawAxis.X,
   ),
   "Y-axis labels w/lines" to LineChartData(
-    lines = listOf(
-      LineChartData.LineData(
+    series = listOf(
+      LineChartData.SeriesData(
         title = "Line A", points = listOf(
-          LineChartData.LineData.LinePoint(0, 0f),
-          LineChartData.LineData.LinePoint(1, 10.0f),
-          LineChartData.LineData.LinePoint(2, 20.0f),
-          LineChartData.LineData.LinePoint(3, 30.0f),
-          LineChartData.LineData.LinePoint(4, 50.0f),
-          LineChartData.LineData.LinePoint(5, 35.0f),
+          LineChartData.SeriesData.Point(0, 0f),
+          LineChartData.SeriesData.Point(1, 10.0f),
+          LineChartData.SeriesData.Point(2, 20.0f),
+          LineChartData.SeriesData.Point(3, 30.0f),
+          LineChartData.SeriesData.Point(4, 50.0f),
+          LineChartData.SeriesData.Point(5, 35.0f),
         ), Color.Red, gradientFill = true
       ),
-      LineChartData.LineData(
+      LineChartData.SeriesData(
         title = "Line B", points = listOf(
-          LineChartData.LineData.LinePoint(0, 20f),
-          LineChartData.LineData.LinePoint(1, 10.0f),
-          LineChartData.LineData.LinePoint(2, 5.0f),
-          LineChartData.LineData.LinePoint(3, 15.0f),
-          LineChartData.LineData.LinePoint(4, 30.0f),
-          LineChartData.LineData.LinePoint(5, 35.0f),
+          LineChartData.SeriesData.Point(0, 20f),
+          LineChartData.SeriesData.Point(1, 10.0f),
+          LineChartData.SeriesData.Point(2, 5.0f),
+          LineChartData.SeriesData.Point(3, 15.0f),
+          LineChartData.SeriesData.Point(4, 30.0f),
+          LineChartData.SeriesData.Point(5, 35.0f),
         ), Color.Blue, gradientFill = true
       ),
     ),

@@ -9,8 +9,10 @@ import androidx.compose.ui.unit.sp
 
 
 data class LineChartData(
-  val lines: List<LineData>,
-  val xLabels: List<String> = listOf(),
+  val series: List<SeriesData>,
+  val xLabels: List<Any> = emptyList(),
+  val xLabelFormatter: (label: Any) -> String = { label -> label.toString() },
+  val showMaxLabelsX: Int? = null,
   val yLabels: List<AxisLabel> = listOf(),
   val chartColors: ChartColors = ChartColors.defaultColors(),
   val horizontalLines: Boolean = false,
@@ -21,13 +23,16 @@ data class LineChartData(
   val axisLabelPadding: Dp = 10.dp,
 ) {
 
-
-  data class LineData(
+  data class SeriesData(
     val title: String,
-    val points: List<LinePoint>,
+    val points: List<Point>,
     val color: Color,
     val gradientFill: Boolean = false,
   ) {
-    data class LinePoint(val x: Int, val value: Float, val label: String? = null)
+    data class Point(
+      val x: Int,
+      val value: Float
+    )
   }
+
 }
