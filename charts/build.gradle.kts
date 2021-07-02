@@ -5,6 +5,7 @@ plugins {
   kotlin("android")
   id("com.vanniktech.maven.publish")
   id("maven-publish")
+  signing
 }
 
 android {
@@ -54,6 +55,7 @@ dependencies {
 
 mavenPublish {
   sonatypeHost = SonatypeHost.S01
+  releaseSigningEnabled = false
 }
 
 afterEvaluate {
@@ -86,5 +88,12 @@ publishing {
     }
   }
 }
+
+//
+//signing {
+//  sign(publishing.publications["release"])
+//}
+
+
 
 
