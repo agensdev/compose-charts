@@ -9,12 +9,11 @@ plugins {
 }
 
 android {
-  compileSdkVersion(Config.targetSdk)
-  buildToolsVersion = Config.buildTools
+  compileSdk = Config.targetSdk
 
   defaultConfig {
-    minSdkVersion(Config.minSdk)
-    targetSdkVersion(Config.targetSdk)
+    minSdk = Config.minSdk
+    targetSdk = Config.targetSdk
   }
 
   buildFeatures {
@@ -46,6 +45,7 @@ dependencies {
     Dependencies.Compose.iconsExtended,
     Dependencies.Compose.animation,
     Dependencies.Compose.tooling,
+    Dependencies.Compose.toolingPreview,
     Dependencies.Compose.util,
     Dependencies.Accompanist.flow
   ).forEach {
