@@ -10,7 +10,6 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,42 +36,43 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import hu.ma.charts.internal.createLegendEntries
-import hu.ma.charts.legend.DrawHorizontalLegend
-import hu.ma.charts.legend.DrawVerticalLegend
-import hu.ma.charts.legend.LegendEntry
-import hu.ma.charts.legend.LegendPosition
+import hu.ma.charts.legend.HorizontalLegend
+import hu.ma.charts.legend.VerticalLegend
+import hu.ma.charts.legend.data.LegendEntry
+import hu.ma.charts.legend.data.LegendPosition
 import hu.ma.charts.line.data.DrawAxis
 import hu.ma.charts.line.data.LineChartData
 import kotlin.math.abs
 import kotlin.math.max
 
 @Composable
+fun LinesChartLegend(position: LegendPosition, entries: List<LegendEntry>) {
+  when (position) {
+    LegendPosition.End, LegendPosition.Start -> {
+      VerticalLegend(legendEntries = entries)
+    }
+    LegendPosition.Top, LegendPosition.Bottom ->
+      HorizontalLegend(legendEntries = entries)
+  }
+}
+
+@Composable
 fun LineChart(
   chartHeight: Dp? = null,
   data: LineChartData,
   onDrillDown: ((x: Int, series: List<LineChartData.SeriesData>) -> Unit)? = null,
-  legend: (@Composable (position: LegendPosition, entries: List<LegendEntry>) -> Unit)? = null
+  legend: (
+    @Composable (
+      position: LegendPosition,
+      entries: List<LegendEntry>
+    ) -> Unit
+  )? = { position, entries ->
+    LinesChartLegend(position = position, entries = entries)
+  }
 ) {
-
   val legendEntries = remember(data) { data.createLegendEntries(data.legendShapeSize) }
 
-  @Composable
-  fun RowScope.legend() {
-    if (legend == null) {
-
-      when (data.legendPosition) {
-        LegendPosition.End, LegendPosition.Start -> {
-          DrawVerticalLegend(legendEntries = legendEntries)
-        }
-        LegendPosition.Top, LegendPosition.Bottom ->
-          DrawHorizontalLegend(legendEntries)
-      }
-    } else {
-      legend(data.legendPosition, legendEntries)
-    }
-  }
-
-  val maxXValues = data.series.maxOf { it.points.maxOf { point -> point.x } }
+  val maxNumberOfPointsOnX = data.series.maxOf { it.points.maxOf { point -> point.x } }
 
   val maxYValue = max(
     data.series.maxOf { it.points.maxOf { point -> point.value } },
@@ -91,7 +91,9 @@ fun LineChart(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = data.legendAlignment.toHorizontalArrangement()
         ) {
-          legend()
+          if (legend != null) {
+            legend(data.legendPosition, legendEntries)
+          }
         }
         Spacer(modifier = Modifier.requiredSize(data.legendOffset))
       }
@@ -111,8 +113,8 @@ fun LineChart(
               .wrapContentWidth()
               .padding(end = data.legendOffset)
           ) {
-            Row {
-              legend()
+            if (legend != null) {
+              legend(data.legendPosition, legendEntries)
             }
           }
         }
@@ -131,16 +133,16 @@ fun LineChart(
             modifier = Modifier
               .fillMaxSize()
               .background(data.chartColors.background)
-              .pointerInput("drag") {
+              .pointerInput(maxNumberOfPointsOnX) {
                 if (onDrillDown != null) {
                   detectHorizontalDragGestures(
                     onHorizontalDrag = { change, _ ->
-                      if (change.position.x >= 0 && change.position.x <= this.size.width) {
+                      if (change.position.x >= 0 && change.position.x <= maxWidth.toPx()) {
                         drillDownPoint = change.position.x
                       }
                     },
                     onDragEnd = {
-                      val xinterval = this.size.width / maxXValues
+                      val xinterval = maxWidth.toPx() / maxNumberOfPointsOnX
                       val snapToPoint = snapToPoints(xinterval, drillDownPoint ?: 0f, data.series)
                       if (snapToPoint != null) {
                         drillDownPoint = ((snapToPoint.x) * xinterval).toFloat()
@@ -150,11 +152,11 @@ fun LineChart(
                   )
                 }
               }
-              .pointerInput("tap") {
+              .pointerInput(maxNumberOfPointsOnX) {
                 if (onDrillDown != null) {
                   detectTapGestures(
                     onTap = {
-                      val xinterval = this.size.width / maxXValues
+                      val xinterval = maxWidth.toPx() / maxNumberOfPointsOnX
                       val snapToPoint = snapToPoints(xinterval, it.x, data.series)
                       if (snapToPoint != null) {
                         drillDownPoint = ((snapToPoint.x) * xinterval).toFloat()
@@ -192,7 +194,7 @@ fun LineChart(
               val chartAreaHeight = componentBottom - heightOfAxisLabels - heightOfYAxisLabels
               val chartBottom = componentBottom - heightOfAxisLabels
 
-              val xinterval = this.size.width / maxXValues.toFloat()
+              val xinterval = this.size.width / maxNumberOfPointsOnX.toFloat()
               val ynormalization = maxYValue / chartAreaHeight
 
               val nativeCanvas = drawContext.canvas.nativeCanvas
@@ -275,7 +277,7 @@ fun LineChart(
                     data.chartColors.axis,
                     strokeWidth = data.axisWidth,
                     start = Offset(0f, chartBottom),
-                    end = Offset(maxXValues * xinterval, chartBottom)
+                    end = Offset(maxNumberOfPointsOnX * xinterval, chartBottom)
                   )
                 }
 
@@ -283,7 +285,7 @@ fun LineChart(
                   val textWidth = xAxisLabelPaint.measureText(xlabel)
                   val x = when (index) {
                     0 -> 0f
-                    data.xLabels.size - 1 -> maxXValues * xinterval - textWidth
+                    data.xLabels.size - 1 -> maxNumberOfPointsOnX * xinterval - textWidth
                     else -> index * xinterval - textWidth / 2f
                   }
                   Label(x, componentBottom, xlabel, textWidth)
@@ -348,8 +350,8 @@ fun LineChart(
               .padding(start = data.legendOffset)
               .wrapContentWidth()
           ) {
-            Row {
-              legend()
+            if (legend != null) {
+              legend(data.legendPosition, legendEntries)
             }
           }
         }
@@ -363,7 +365,9 @@ fun LineChart(
             .fillMaxWidth(),
           horizontalArrangement = data.legendAlignment.toHorizontalArrangement()
         ) {
-          legend()
+          if (legend != null) {
+            legend(data.legendPosition, legendEntries)
+          }
         }
       }
     }
@@ -371,7 +375,7 @@ fun LineChart(
 }
 
 private fun snapToPoints(
-  xinterval: Int,
+  xinterval: Float,
   x: Float,
   series: List<LineChartData.SeriesData>
 ): LineChartData.SeriesData.Point? =

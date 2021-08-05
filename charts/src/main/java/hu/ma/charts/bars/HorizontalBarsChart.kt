@@ -34,8 +34,8 @@ import hu.ma.charts.bars.data.StackedBarData
 import hu.ma.charts.bars.data.StackedBarItem
 import hu.ma.charts.internal.DefaultText
 import hu.ma.charts.internal.safeGet
-import hu.ma.charts.legend.DrawHorizontalLegend
-import hu.ma.charts.legend.LegendEntry
+import hu.ma.charts.legend.HorizontalLegend
+import hu.ma.charts.legend.data.LegendEntry
 import kotlin.math.min
 
 internal val MinimumBarWidth = 24.dp
@@ -53,7 +53,9 @@ fun HorizontalBarsChart(
   data: HorizontalBarsData,
   modifier: Modifier = Modifier,
   divider: @Composable (() -> Unit)? = null,
-  legend: @Composable (ColumnScope.(entries: List<LegendEntry>) -> Unit)? = null,
+  legend: @Composable (ColumnScope.(entries: List<LegendEntry>) -> Unit)? = {
+    HorizontalLegend(legendEntries = it)
+  },
   legendOffset: Dp = 4.dp,
   dropdownModifier: Modifier = DropdownDefaultModifier,
   dropdownContent: @Composable (StackedBarData) -> Unit = {
@@ -70,8 +72,6 @@ fun HorizontalBarsChart(
   Column(modifier = modifier) {
     if (legend != null) {
       legend(legendEntries)
-    } else {
-      DrawHorizontalLegend(legendEntries = legendEntries)
     }
 
     Spacer(
@@ -127,12 +127,14 @@ internal fun StackedHorizontalBar(
   title: TextRowFactory = {},
   value: TextRowFactory = {},
 ) {
-  val entries = data.entries.mapIndexed { idx, item ->
-    StackedBarItem(
-      text = item.text,
-      value = item.value,
-      color = item.color ?: colors.safeGet(idx)
-    )
+  val entries = remember(data) {
+    data.entries.mapIndexed { idx, item ->
+      StackedBarItem(
+        text = item.text,
+        value = item.value,
+        color = item.color ?: colors.safeGet(idx)
+      )
+    }
   }
 
   Column(modifier) {
