@@ -106,7 +106,8 @@ fun LineChart(
     }
   }
 
-  val hasYLabelsOutsideChartValueRange = yLabels.maxOf { it.atValue } >= maxYValueFromData
+  val hasYLabelsOutsideChartValueRange =
+    yLabels.isNotEmpty() && yLabels.maxOf { it.atValue } >= maxYValueFromData
 
   val maxYValueAdjusted = if (hasYLabelsOutsideChartValueRange) {
     yLabels.maxOf { it.atValue }
