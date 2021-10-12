@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-  compileSdk = Config.targetSdk
+  compileSdk = Config.compileSdk
 
   defaultConfig {
     minSdk = Config.minSdk
